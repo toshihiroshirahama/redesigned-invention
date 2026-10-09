@@ -53,7 +53,8 @@
       <ul id="nav-list">
         <li><a href="#symptoms">症状から探す</a></li>
         <li><a href="#estimate">料金シミュレーター</a></li>
-        <li><a href="#promise">5つの約束</a></li>
+        <li><a href="#selfcheck">セルフチェック</a></li>
+        <li><a href="#promise">選ばれる理由</a></li>
         <li><a href="#price">料金表</a></li>
         <li><a href="#flow">ご依頼の流れ</a></li>
         <li><a href="#faq">よくある質問</a></li>
@@ -120,6 +121,21 @@
     </div>
   </section>
 
+  <!-- SELF CHECK -->
+  <section class="section selfcheck" id="selfcheck">
+    <div class="wrap narrow">
+      <h2 class="h-section"><span>修理に出す前の<br>1分セルフチェック</span><small>SELF CHECK</small></h2>
+      <p class="section-lead">実は「修理不要」だったというケースも少なくありません。お金をかける前に、まずこちらを確認してください。<b>直ってしまえば、それが一番です。</b></p>
+      <div class="tabs" role="tablist" aria-label="セルフチェックの機材">
+        <button role="tab" aria-selected="true" data-check="guitar">ギター・ベース</button>
+        <button role="tab" aria-selected="false" data-check="effector">エフェクター</button>
+        <button role="tab" aria-selected="false" data-check="amp">アンプ</button>
+      </div>
+      <ul class="checklist" id="checklist"></ul>
+      <div class="check-result" id="check-result" aria-live="polite"></div>
+    </div>
+  </section>
+
   <!-- ESTIMATE SIMULATOR -->
   <section class="section estimate" id="estimate">
     <div class="wrap">
@@ -176,6 +192,35 @@
           <p>ヴィンテージ真空管アンプ、廃盤エフェクター、自作キットの不具合など。部品の代替案を含め、直す方法を一緒に考えます。</p>
         </li>
       </ol>
+    </div>
+  </section>
+
+  <!-- UNIQUE -->
+  <section class="section unique" id="unique">
+    <div class="wrap">
+      <h2 class="h-section"><span>ここにしかない、4つの取り組み</span><small>ONLY HERE</small></h2>
+      <div class="unique-grid">
+        <article class="unique-card">
+          <span class="u-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10v4M7 7v10M11 4v16M15 8v8M19 11v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          <h3>修理前後の音を<br>録音してお渡し</h3>
+          <p>同じ機材・同じ設定で修理前と修理後の音を録音。数字だけでなく「耳で」違いを確かめられます。修理事例のページでも試聴できます。</p>
+        </article>
+        <article class="unique-card">
+          <span class="u-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+          <h3>ライブ・録音前の<br>特急修理</h3>
+          <p>「週末のライブまでに」「明日のレコーディングで使う」。本番日をお知らせいただければ、間に合わせる段取りを最優先で組みます。【特急料金・対応範囲を記入】</p>
+        </article>
+        <article class="unique-card">
+          <span class="u-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 7h14M5 7l-3 7a4 4 0 0 0 6 0zM19 7l-3 7a4 4 0 0 0 6 0z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+          <h3>「直すより買い替え」が得なら、正直に言います</h3>
+          <p>修理代が機材の価値を上回る場合は、作業前にはっきりお伝えします。思い入れのある一本なら全力で直し、そうでなければ別の選択肢も一緒に考えます。</p>
+        </article>
+        <article class="unique-card">
+          <span class="u-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          <h3>修理後も続く<br>メンテナンスの相談</h3>
+          <p>季節の変わり目のネックの反り、真空管の交換時期など、修理後の気になることはいつでも相談できます。レポートの記録があるから、前回との比較もすぐできます。</p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -300,6 +345,7 @@
           <h3>ネックの順反りで弾きにくかったジャズベース</h3>
           <p>トラスロッド調整とフレットすり合わせで、弦高を下げてもビビらない状態に。</p>
           <p class="case-meta">期間 7日／工賃 ¥22,000</p>
+          <div class="listen" data-case="case1"><button type="button" data-ab="before">▶ 修理前の音</button><button type="button" data-ab="after">▶ 修理後の音</button></div>
         </article>
         <article class="case">
           <div class="case-img"><span>BEFORE / AFTER<br>写真</span></div>
@@ -307,6 +353,7 @@
           <h3>電源は入るが音が出ない70年代のコンボアンプ</h3>
           <p>劣化した電解コンデンサと抵抗を交換し、バイアスを再調整。本来の太い音が復活。</p>
           <p class="case-meta">期間 14日／工賃 ¥38,500</p>
+          <div class="listen" data-case="case2"><button type="button" data-ab="before">▶ 修理前の音</button><button type="button" data-ab="after">▶ 修理後の音</button></div>
         </article>
         <article class="case">
           <div class="case-img"><span>BEFORE / AFTER<br>写真</span></div>
@@ -314,6 +361,7 @@
           <h3>踏むと音が途切れるオーバードライブ</h3>
           <p>フットスイッチ交換とハンダ割れの修正。あわせてLEDを視認性の高いものに変更。</p>
           <p class="case-meta">期間 3日／工賃 ¥5,500</p>
+          <div class="listen" data-case="case3"><button type="button" data-ab="before">▶ 修理前の音</button><button type="button" data-ab="after">▶ 修理後の音</button></div>
         </article>
       </div>
     </div>

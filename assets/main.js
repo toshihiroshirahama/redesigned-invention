@@ -119,8 +119,8 @@ function renderSymptoms(tab) {
     });
   });
 }
-$$(".tabs button").forEach((b) => b.addEventListener("click", () => {
-  $$(".tabs button").forEach((x) => x.setAttribute("aria-selected", x === b));
+$$("[data-tab]").forEach((b) => b.addEventListener("click", () => {
+  $$("[data-tab]").forEach((x) => x.setAttribute("aria-selected", x === b));
   renderSymptoms(b.dataset.tab);
 }));
 $("#symptom-grid").addEventListener("click", (e) => {
@@ -188,6 +188,62 @@ $("#sim-to-form").addEventListener("click", () => {
   if (!$("#f-gear").value) $("#f-gear").value = MENU[state.inst].name;
 });
 
+
+/* ---------- Self check ---------- */
+const CHECKS = {
+  guitar: [
+    ["別のシールドケーブルで試した", "ケーブルの断線は「音が出ない・途切れる」の原因で一番多いものです。"],
+    ["アンプ側・ボリュームのツマミを確認した", "ギター本体のボリュームが0になっていることもよくあります。"],
+    ["アクティブ回路なら電池を新品に替えた", "電池が弱ると歪む・音が小さくなるなどの症状が出ます。"],
+    ["弦を新しく張り替えた", "古い弦はチューニングが合わない・音がこもる原因になります。"],
+  ],
+  effector: [
+    ["電池・アダプターを替えて試した", "電圧が足りないと動作が不安定になります。センターマイナスか、電圧が合っているかも確認を。"],
+    ["パッチケーブルを交換した", "短いケーブルほど断線に気づきにくいものです。"],
+    ["そのエフェクター単体でアンプにつないだ", "ボード上の別のエフェクターが原因のこともあります。"],
+    ["ツマミ・スイッチを何度か動かした", "長く使っていないと接点が汚れているだけのことがあります。"],
+  ],
+  amp: [
+    ["別のギター・ケーブルで試した", "アンプではなく楽器やケーブル側が原因のこともあります。"],
+    ["スタンバイスイッチ・ボリュームを確認した", "真空管アンプはスタンバイをONにしないと音が出ません。"],
+    ["別のコンセントにつないだ", "電源タップやノイズの多い機器の近くが原因の場合もあります。"],
+    ["エフェクトループ・ヘッドホン端子に何も挿していない", "挿しっぱなしだとスピーカーから音が出ない機種があります。"],
+  ],
+};
+function renderChecks(key) {
+  const ul = $("#checklist");
+  ul.innerHTML = CHECKS[key].map(([t, d], i) =>
+    `<li><label><input type="checkbox" data-i="${i}"><span>${t}<small>${d}</small></span></label></li>`).join("");
+  $("#check-result").innerHTML = "";
+}
+$("#checklist").addEventListener("change", () => {
+  const boxes = $$("#checklist input");
+  const done = boxes.filter((b) => b.checked).length;
+  $("#check-result").innerHTML = done === boxes.length
+    ? `<p>すべて試しても直らない場合は、機材本体の不具合の可能性が高いです。</p><a class="btn btn-primary" href="#estimate">料金の目安を調べる</a>`
+    : `<p class="muted">${done} / ${boxes.length} 項目チェック済み</p>`;
+});
+$$("[data-check]").forEach((b) => b.addEventListener("click", () => {
+  $$("[data-check]").forEach((x) => x.setAttribute("aria-selected", x === b));
+  renderChecks(b.dataset.check);
+}));
+renderChecks("guitar");
+
+/* ---------- 修理前後の音（assets/audio/case1-before.mp3 などを置くと再生されます） ---------- */
+const player = new Audio();
+let playingBtn = null;
+const stopPlaying = () => { if (playingBtn) playingBtn.classList.remove("playing"); playingBtn = null; };
+player.addEventListener("ended", stopPlaying);
+$$(".listen button").forEach((btn) => btn.addEventListener("click", () => {
+  if (playingBtn === btn) { player.pause(); stopPlaying(); return; }
+  const wrap = btn.closest(".listen");
+  stopPlaying();
+  player.src = `assets/audio/${wrap.dataset.case}-${btn.dataset.ab}.mp3`;
+  player.play().then(() => { playingBtn = btn; btn.classList.add("playing"); }).catch(() => {
+    if (!$(".listen-note", wrap)) wrap.insertAdjacentHTML("beforeend", '<p class="listen-note">音源は準備中です。</p>');
+  });
+}));
+
 /* ---------- Flow switch ---------- */
 $$(".flow-switch button").forEach((b) => b.addEventListener("click", () => {
   $$(".flow-switch button").forEach((x) => x.setAttribute("aria-selected", x === b));
@@ -247,7 +303,7 @@ if ("IntersectionObserver" in window) {
   const io = new IntersectionObserver((entries) => entries.forEach((en) => {
     if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
   }), { threshold: 0.12 });
-  $$(".promise-list li, .price-card, .case, .flow-list li, .worry-list li").forEach((el) => {
+  $$(".promise-list li, .unique-card, .price-card, .case, .flow-list li, .worry-list li").forEach((el) => {
     el.classList.add("reveal"); io.observe(el);
   });
 }
